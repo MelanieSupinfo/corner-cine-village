@@ -7,12 +7,26 @@
   </head>
   <body>
     <main>
-        <!-- Navigation -->
-        <nav>
-            <a href="index.html">Accueil</a>
-            <a href="search.html">Rechercher un film</a>
-            <a href="movie.html">Détails d'un film</a>
-        </nav>
+      <!-- Navigation -->
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="search.html">Rechercher un film</a>
+        <a href="movie.html">Détails d'un film</a>
+      </nav>
+      
+      <!-- Résultats de recherche = poster + titre + lien dans search.js-->
+      <h1>Rechercher un film</h1>
+      <form id="search-form">
+        <input id="search-input" type="text" placeholder="Nom du film en anglais" aria-label="Rechercher un film (nom en anglais)" required>
+        <button type="submit">Rechercher</button>
+      </form>
+      <div id="search-results"></div>
+      
+      <!-- Charger plus de résultats : bouton caché avant recherche -->
+      <div>
+        <button id="load-more-btn" style="display: none;">Afficher plus de résultats</button>
+      </div>
+    </main>
     <script type="module" src="/src/search.js"></script>
   </body>
 </html>
