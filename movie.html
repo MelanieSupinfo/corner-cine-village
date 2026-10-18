@@ -3,15 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/src/style.css">
-    <title>Détail du film</title>
+    <title>Détails d'un film</title>
   </head>
   <body>
     <!-- Navigation -->
     <nav>
       <a href="index.html">Accueil</a>
       <a href="search.html">Rechercher un film</a>
-      <a href="movie.html">Détail d'un film</a>
     </nav>
+    <main>
+      <!-- Structure fiche Film, contenu importé depuis movie.js -->
+      <div id="movie-container">
+        <h1 id="movie-title">Chargement...</h1>
+        <img id="movie-poster" src="" aria-label="Affiche du film sélectionné">
+        <div>
+          <h2>Synopsis complet :</h2>
+          <p id="movie-full-plot"></p>
+        </div>
+        <div>
+          <h2>Genre :</h2>
+          <div id="movie-genre"></div>
+        </div>
+        <div>
+          <h2>Acteur.rice.s :</h2>
+          <div id="movie-actors"></div>
+        </div>
+        <div>
+          <h2>Note :</h2>
+          <div id="movie-ratings"></div>
+        </div>
+        <div>
+          <h2>Année de sortie en DVD :</h2>
+          <div id="movie-year-DVD"></div>
+        </div>
+      </div>
+    </main>
   <script type="module" src="/src/movie.js"></script>
   </body>
-</html>
+</html> 

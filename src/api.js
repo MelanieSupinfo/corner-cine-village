@@ -8,28 +8,43 @@ const API_KEY = import.meta.env.VITE_OMDB_API_KEY
 //évite de réécrire l'adresse du site OMDb à chaque requête. Si URL change, modification de cette constante uniquement//
 const LINK_URL = 'https://www.omdbapi.com/' 
 
+// fonction pour search.html => recherche via titre par les users, résultat = tableau de films //
+// NB : Charge moins de résultats que recherche par ID => plus rapide ? //
 export async function queryMovies(query) {
     
-    // format URL cahier des charges// 
+    // format URL cahier des charges (NB : recherche à s = titre multiple mieux que t car t = titre précis) //
     // fonction encodeURIComponent transforme caractères spéciaux en code pour URL (espaces remplacés par %) sinon requête marche pas//
     const url = LINK_URL + '?apikey=' + API_KEY + '&s=' + encodeURIComponent(query)
     
     const response = await fetch(url)
 
     //conversion en objet JSON des data Title, Year, etc.//
-    const data_movies = await response.json()
+    const dataByTitle = await response.json()
 
-    if (data_movies.Response === 'False') { 
-        //format de réponse OMDb : Response :'True' et Error : Movie not found!//
-        throw new Error("Aucun résultat. Veuillez réssayer.")
+    //format de réponse OMDb : Response :'True' et Error : Movie not found!//
+    if (dataByTitle.Response === 'False') {
+        throw new Error("Aucun résultat. Veuillez réessayer plus tard ou vérifier l'orthographe (anglaise) du titre recherché.")
     }
 
     return {
-        // results : définit ici pour être réutilisé dans les autres fichiers js
-        // Search = tableau de résultats d'OMDb
-        // opérateur OU || : si Search renvoie un résultat, il est affiché ; sinon renvoie tableau vide (Sans OU, bug = undefined)//
-        results: data_movies.Search || [], 
-    
-        total: data_movies.totalResults || 0 //idem explication que pour results//
+        // results : définit ici pour être réutilisé dans les autres fichiers js //
+        // Search = tableau de résultats d'OMDb //
+        // opérateur OU || : si Search renvoie un résultat, il est affiché ; sinon renvoie tableau vide (sans OU, bug = undefined) //
+        results: dataByTitle.Search || [],
+        total: dataByTitle.totalResults || 0 //idem explication que pour results//
     }
+}
+
+// fonction pour movie.html => recherche via ID par lien depuis search.html //
+// résultat : renvoie toutes les champs du film dont le full plot //
+export async function getMovieById(imdbID) {
+    const url = LINK_URL + '?apikey=' + API_KEY + '&i=' + imdbID + '&plot=full'
+    const response = await fetch(url)
+    const dataByID = await response.json()
+
+    if (dataByID.Response === 'False') {
+        throw new Error("Erreur lors du chargement. Veuillez renouveler la recherche ou réessayer plus tard.")
+    }
+    
+    return dataByID
 }
