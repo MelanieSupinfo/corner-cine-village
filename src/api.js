@@ -9,29 +9,29 @@ const API_KEY = import.meta.env.VITE_OMDB_API_KEY
 const LINK_URL = 'https://www.omdbapi.com/' 
 
 // fonction pour search.html => recherche via titre par les users, résultat = tableau de films //
-// NB : Charge moins de résultats que recherche par ID => plus rapide ? //
-export async function queryMovies(query) {
+// NB : Charge moins de résultats que recherche par ID => plus rapide //
+export async function queryMovies(title = '', year = '') {
     
     // format URL cahier des charges (NB : recherche à s = titre multiple mieux que t car t = titre précis) //
     // fonction encodeURIComponent transforme caractères spéciaux en code pour URL (espaces remplacés par %) sinon requête marche pas//
-    const url = LINK_URL + '?apikey=' + API_KEY + '&s=' + encodeURIComponent(query)
+    let url = LINK_URL + '?apikey=' + API_KEY + '&s=' + encodeURIComponent(title)
     
     const response = await fetch(url)
 
     //conversion en objet JSON des data Title, Year, etc.//
-    const dataByTitle = await response.json()
+    const dataQuery = await response.json()
 
     //format de réponse OMDb : Response :'True' et Error : Movie not found!//
-    if (dataByTitle.Response === 'False') {
-        throw new Error("Aucun résultat. Veuillez réessayer plus tard ou vérifier l'orthographe (anglaise) du titre recherché.")
+    if (dataQuery.Response === 'False') {
+        throw new Error("Erreur lors du chargement. Veuillez recharger la page ou réessayer plus tard.")
     }
 
     return {
         // results : définit ici pour être réutilisé dans les autres fichiers js //
         // Search = tableau de résultats d'OMDb //
         // opérateur OU || : si Search renvoie un résultat, il est affiché ; sinon renvoie tableau vide (sans OU, bug = undefined) //
-        results: dataByTitle.Search || [],
-        total: dataByTitle.totalResults || 0 //idem explication que pour results//
+        results: dataQuery.Search || [],
+        total: dataQuery.totalResults || 0 //idem explication que pour results//
     }
 }
 
@@ -45,6 +45,6 @@ export async function getMovieById(imdbID) {
     if (dataByID.Response === 'False') {
         throw new Error("Erreur lors du chargement. Veuillez renouveler la recherche ou réessayer plus tard.")
     }
-    
+
     return dataByID
 }

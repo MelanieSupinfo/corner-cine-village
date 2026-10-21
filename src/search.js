@@ -1,33 +1,28 @@
 import './style.css'
 import {queryMovies} from './api.js'
+import {createMovieCard} from './tools.js'
 
 const form = document.getElementById('search-form')
 const input = document.getElementById('search-input')
 const searchResults = document.getElementById('search-results')
 const searchMoreBtn = document.getElementById('search-more-btn')
 
-// déclaration pour charger les données à distribuer aux fonctions //
+// déclaration pour charger et garder en mémoire les données à distribuer aux 2 fonctions event//
 let allData = []
 
 function displayMovies(movies) {
    
     // boucle for sur chaque film trouvé : 
-    // compteur de film i pour indice, commence tjs à 0, i++ incrémente de i+1 //
+    // compteur de film, i pour indice, commence tjs à 0, i++ incrémente de i+1 //
     // length = nbr d'éléments de results //
     for (let i = 0; i < movies.length; i++) {
     
         // constante pour réutiliser chaque résultat de film trouvé par la boucle dans une fiche //
         const movie = movies[i]
 
-        // création fiche Film pour insertion div HTML quand il y a un résultat //
-        // parmi les infos de la recherche, création lien qui charge l'ID du film plutôt que le titre dans http://localhost pour que movie.js puisse utiliser fonction getMovieById dans api.js //
-        const movieCard = `
-            <div class="movie-card">
-                <img src="${movie.Poster}" alt="${movie.Title}" />
-                <h3>${movie.Title}</h3>
-                <a href="/movie.html?id=${movie.imdbID}">En savoir plus</a>
-            </div>
-        `
+        // import fonction-outil pour créer des fiches Film en innerHTML //
+        const movieCard = createMovieCard(movie)
+
         // insertion de la fiche Film dans la page HTML via const searchResults//
         searchResults.innerHTML += movieCard
     }
@@ -41,15 +36,15 @@ form.addEventListener('submit', async (e) => { // e comme event par convention /
     console.log("Page, ne te recharge PAS maintenant !")
     
     // valeur rentrée dans la barre de recherche + trim enlève les espaces //
-    const query = input.value.trim()
+    const searchInput = input.value.trim()
     
     // si recherche vide (=!), stoppe la fonction ici, pas d'envoi à OMDb //
-    if (!query) {
+    if (!searchInput) {
         return
     }
 
     try {
-        const dataSearch = await queryMovies(query)
+        const dataSearch = await queryMovies(searchInput)
 
         // rattachement des données de la constante à la boîte allData déclarée en let //
         allData = dataSearch
@@ -70,7 +65,7 @@ form.addEventListener('submit', async (e) => { // e comme event par convention /
         // si recherche pas ok, affichage message d'erreur dans HTML via const searchResults //
         // message d'erreur dans le throw new Error de queryMovies dans api.js //
         // .message = propriété qui contient le texte d'Error//
-        searchResults.innerHTML = `<p>${error.message}</p>`
+        searchResults.innerHTML = `<p>${error.message} Vérifiez l'orthographe (anglaise) du titre recherché.</p>`
         searchMoreBtn.style.display = 'none'
     }
 })
@@ -81,7 +76,7 @@ searchMoreBtn.addEventListener('click', () => {
     // rajouter 3 films de plus à l'indice de la boucle for //
     const start = 3
     const end = start + 3
-    // appel boîte allData contenant data_search //
+    // appel boîte allData contenant dataSearch //
     const moreMovies = allData.results.slice(start, end)
 
     // affichage des films chargés en plus : appel de la fonction d'affichage //
