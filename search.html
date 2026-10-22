@@ -6,27 +6,28 @@
     <title>Rechercher un film</title>
   </head>
   <body>
-    <main>
-      <!-- Navigation -->
-      <nav>
-        <a href="index.html">Accueil</a>
-        <a href="movie.html">Détails d'un film</a>
-      </nav>
-      
-      <!-- Résultats de recherche = poster + titre + lien importés depuis search.js-->
-      <h1>Rechercher un film</h1>
-      <form id="search-form">
-        <input id="search-input" type="text" placeholder="Nom du film en anglais" aria-label="Rechercher un film (nom en anglais)" required>
-        <button type="submit">Rechercher</button>
-      </form>
-      
-      <div id="search-results"></div>
-      
-      <!-- Charger plus de résultats : bouton caché avant recherche -->
-      <div>
-        <button id="search-more-btn" style="display: none;">Afficher plus de résultats</button>
-      </div>
-    </main>
+    <!-- Navigation -->
+    <nav id="navigation">
+      <a href="index.html">Accueil</a>
+      <a href="movie.html">Détails d'un film</a>
+    </nav>
+    
+    <!-- Résultats de recherche = poster + titre + lien importés depuis search.js-->
+    <h1>Rechercher un film</h1>
+    <p>Pour faire une nouvelle recherche et effacer l'ancienne, rafraîchir la page dans le navigateur.</p>
+    
+    <form id="search-form">
+      <input id="search-input" type="text" placeholder="Nom du film en anglais" aria-label="Rechercher un film (nom en anglais)" required>
+      <button type="submit">Rechercher</button>
+    </form>
+    
+    <div id="search-results"></div>
+    
+    <!-- Charger plus de résultats : bouton caché avant recherche -->
+    <div>
+      <button id="search-more-btn" style="display: none;">Afficher plus de résultats</button>
+    </div>
+
     <script type="module" src="/src/search.js"></script>
   </body>
 </html>

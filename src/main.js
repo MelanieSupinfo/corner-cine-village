@@ -10,18 +10,32 @@ let currentPage = 1
 const moviesPerPage = 3
 
 // liste films recommandés by IDs pour insertion en entrée dans la fonction getMovieById //
+// ajouter plus d'IDs pour le bouton "Voir plus de films" (par ex films coup de coeur du cinema) //
 const recommendedIDs = [
     'tt0111161', // The Shawshank Redemption (9.3)
+    'tt1856101', // Blade Runner 2049 (8.1)
+    'tt0105665', // Twin Peaks (prequel movie)
     'tt0068646', // The Godfather (9.2)
+    'tt0475784', // Westworld (serie) (8.4)
+    'tt31806037', // Adolescence (mini serie)
     'tt0468569', // The Dark Knight (9.0)
+    'tt0119698', // Princess Mononoke
     'tt0167260', // The Lord of the Rings: The Return of the King (9.0)
+    'tt8101850', // Undone (mini-serie)
     'tt0108052', // Schindler's List (9.0)
+    'tt0065088', // They shoot horses, don't they ?
     'tt0120737', // The Lord of the Rings: The Fellowship of the Ring (8.9)
+    'tt26743760', // The Apothecary diaries (serie, animated)
     'tt0110912', // Pulp Fiction (8.9)
+    'tt10048342', // The Queen's gambit (mini-serie)
     'tt0167261', // The Lord of the Rings: The Two Towers (8.8)
+    'tt0087182', // Dune (Lynch version)
+    'tt36955518', // Jim Queen (animated)
     'tt0071562', // The Godfather Part II (9.0)
+    'tt8946378', // Knives out
     'tt0137523', // Fight Club (8.8)
-    // ajouter plus d'IDs pour le bouton "Voir plus de films" (par ex films coup de coeur perso) //
+    'tt1748122', // Moonrise kingdom
+    'tt0083658', // Blade Runner (1982) (8.1)
 ]
 
 // fonction pour charger les films recommandés //
